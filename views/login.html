@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Hi Employees, Feel free to talk here <%= title %></title>
+    <link rel="stylesheet" href="stylesheets/bootstrap.min.css" media="screen">
+    <style type="text/css">
+        .m15 {
+            margin: 15px;
+        }
+
+        .tc {
+            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body screen_capture_injected="true">
+<div class="container">
+    <%- message %>
+    <form class="col-sm-offset-4 col-sm-4 form-horizontal" role="form" method="post" onsubmit="return false">
+        <fieldset>
+            <legend></legend>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <p class="tc">Chat Room Enter</p>
+                </div>
+                <div class="panel-body m15">
+                    <div class="form-group">
+                        <div class="input-group">
+						<span class="input-group-addon">
+						<span class="glyphicon glyphicon-user"></span>
+						</span>
+                            <input type="text" class="form-control" id="username" name="username"
+                                   placeholder="User Name" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+						<span class="input-group-addon">
+						<span class="glyphicon glyphicon-lock"></span>
+						</span>
+                            <input type="password" class="form-control" id="password" name="password"
+                                   placeholder="Password" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block" id="login0">Login</button>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-info col-sm-2 col-sm-offset-10" id="register0"
+                                style="margin-left: 244px;padding-right: 60px">Register
+                        </button>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary btn-block" id="logina"
+                                style="background-color:yellowgreen">Anonymous Login
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+
+<script type="text/javascript" src="javascripts/jquery.min.js"></script>
+<script type="text/javascript" src="javascripts/bootstrap.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $("#register0").click(function(){
+            location.href = 'register';
+        });
+        $("#login0").click(function(){
+            var username = $("#username").val();
+            var password = $("#password").val();
+            var data = {"uname":username,"upwd":password};
+            $.ajax({
+                url:'/login',
+                type:'post',
+                data: data,
+                success: function(data,status){
+                    if(status == 'success'){
+                        location.href = 'home';
+                    }
+                },
+                error: function(data,status){
+                    if(status == 'error'){
+                        location.href = 'login';
+                    }
+                }
+            });
+        });
+        $("#logina").click(function(){
+            var username = Math.floor((Math.random() * 10000) + 1);
+            var password = Math.floor((Math.random() * 100) + 1);
+            var data = {"uname":username,"upwd":password};
+            $.ajax({
+                url:'/logina',
+                type:'post',
+                data: data,
+                success: function(data,status){
+                    if(status == 'success'){
+                        location.href = 'home';
+                    }
+                },
+                error: function(data,status){
+                    if(status == 'error'){
+                        location.href = 'login';
+                    }
+                }
+            });
+        });
+    });
+</script>
+</body>
+</head>
+</html>
